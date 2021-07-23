@@ -4,7 +4,8 @@ import _map from 'lodash/map';
 import _upperFirst from 'lodash/upperFirst';
 import _camelCase from 'lodash/camelCase';
 
-import components, { Layout } from '../components/index';
+import components from '../components/index';
+import Layout from '../components/Layout';
 import { getPageUrl } from '../utils';
 
 export default class Landing extends React.Component {

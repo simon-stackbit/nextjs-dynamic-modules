@@ -1,7 +1,7 @@
 import React from 'react';
 import _get from 'lodash/get';
 
-import { Layout } from '../components/index';
+import Layout from '../components/Layout';
 import { htmlToReact, withPrefix, markdownify } from '../utils';
 import BlogPostFooter from '../components/BlogPostFooter';
 

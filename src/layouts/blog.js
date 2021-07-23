@@ -3,7 +3,7 @@ import _get from 'lodash/get';
 import _map from 'lodash/map';
 import _orderBy from 'lodash/orderBy';
 
-import { Layout } from '../components';
+import Layout from '../components/Layout';
 import { Link, getPageUrl, withPrefix } from '../utils';
 import BlogPostFooter from '../components/BlogPostFooter';
 
