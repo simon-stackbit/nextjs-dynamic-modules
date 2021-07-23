@@ -1,11 +1,11 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 import Router from 'next/router';
 import _trim from 'lodash/trim';
 import _isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
 
-import { withPrefix, classNames } from '../utils';
+import { withPrefix } from '../utils';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -55,9 +55,7 @@ export default class Body extends React.Component {
     render() {
         const page = _get(this.props, 'page');
         const config = _get(this.props, 'config');
-        const font = _get(config, 'base_font', 'nunito-sans');
         const favIcon = _get(config, 'favicon');
-        const palette = _get(config, 'palette', 'blue');
         const domain = _trim(_get(config, 'domain', ''), '/');
         const configTitle = _get(config, 'title');
         const pageTitle = _get(page, 'title');
@@ -86,7 +84,7 @@ export default class Body extends React.Component {
 
         return (
             <React.Fragment>
-                <Helmet>
+                <Head>
                     <title>{title}</title>
                     <meta charSet="utf-8" />
                     <meta name="viewport" content="width=device-width, initialScale=1.0" />
@@ -94,16 +92,8 @@ export default class Body extends React.Component {
                     {seoDescription && <meta name="description" content={seoDescription} />}
                     {!_isEmpty(seoRobots) && <meta name="robots" content={seoRobots} />}
                     {seoExtra}
-                    {font !== 'system-sans' && <link rel="preconnect" href="https://fonts.gstatic.com" />}
-                    {font === 'nunito-sans' && (
-                        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-                    )}
-                    {font === 'fira-sans' && (
-                        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
-                    )}
                     {favIcon && <link rel="icon" href={withPrefix(favIcon)} />}
-                    <body className={classNames(`palette-${palette}`, `font-${font}`)} />
-                </Helmet>
+                </Head>
                 <div id="page" className="site">
                     <Header page={page} config={config} />
                     <main id="content" className="site-content">

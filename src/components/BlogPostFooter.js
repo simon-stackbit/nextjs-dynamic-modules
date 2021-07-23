@@ -1,7 +1,7 @@
 import React from 'react';
 import _get from 'lodash/get';
 import _trim from 'lodash/trim';
-import moment from 'moment-strftime';
+import dayjs from 'dayjs';
 
 import { getData } from '../utils';
 
@@ -11,8 +11,8 @@ export default class BlogPostFooter extends React.Component {
         const dateType = _get(this.props, 'dateType');
         const data = _get(this.props, 'data');
         const date = _get(post, 'date');
-        const dateTimeAttr = moment(date).strftime('%Y-%m-%d %H:%M');
-        const formattedDate = dateType === 'short' ? moment(date).strftime('%B %d, %Y') : moment(date).strftime('%A, %B %e, %Y');
+        const dateTimeAttr = dayjs(date).format('YYYY-MM-DD HH:mm');
+        const formattedDate = dateType === 'short' ? dayjs(date).format('MMMM DD, YYYY') : dayjs(date).format('dddd, MMMM D, YYYY');
         const postAuthorRef = _get(post, 'author');
         const author = postAuthorRef ? getData(data, postAuthorRef) : null;
         const authorName = author ? _trim(`${author.first_name} ${author.last_name}`) : null;
