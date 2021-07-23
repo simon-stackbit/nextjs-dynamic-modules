@@ -1,5 +1,6 @@
 import React from 'react';
-import _ from 'lodash';
+import _map from 'lodash/map';
+import _get from 'lodash/get';
 
 import { htmlToReact, markdownify } from '../utils';
 
@@ -10,7 +11,7 @@ export default class SectionFaq extends React.Component {
     }
 
     componentDidMount() {
-        const handorgelElm = _.get(this.handorgelRef, 'current');
+        const handorgelElm = _get(this.handorgelRef, 'current');
         if (handorgelElm) {
             new handorgel(handorgelElm, {
                 multiSelectable: true
@@ -19,8 +20,8 @@ export default class SectionFaq extends React.Component {
     }
 
     renderFaqItem(faqItem, index) {
-        const question = _.get(faqItem, 'question');
-        const answer = _.get(faqItem, 'answer');
+        const question = _get(faqItem, 'question');
+        const answer = _get(faqItem, 'answer');
 
         return (
             <React.Fragment key={index}>
@@ -38,12 +39,12 @@ export default class SectionFaq extends React.Component {
     }
 
     render() {
-        const section = _.get(this.props, 'section');
-        const sectionId = _.get(section, 'section_id');
-        const background = _.get(section, 'background');
-        const title = _.get(section, 'title');
-        const subtitle = _.get(section, 'subtitle');
-        const faqItems = _.get(section, 'faq_items');
+        const section = _get(this.props, 'section');
+        const sectionId = _get(section, 'section_id');
+        const background = _get(section, 'background');
+        const title = _get(section, 'title');
+        const subtitle = _get(section, 'subtitle');
+        const faqItems = _get(section, 'faq_items');
 
         return (
             <section id={sectionId} className={`block faq-block bg-${background} outer`}>
@@ -54,7 +55,7 @@ export default class SectionFaq extends React.Component {
                     </div>
                     {faqItems && (
                         <div className="faq-accordion handorgel" ref={this.handorgelRef}>
-                            {_.map(faqItems, (faqItem, index) => this.renderFaqItem(faqItem, index))}
+                            {_map(faqItems, (faqItem, index) => this.renderFaqItem(faqItem, index))}
                         </div>
                     )}
                 </div>

@@ -1,16 +1,16 @@
 import React from 'react';
-import _ from 'lodash';
+import _get from 'lodash/get';
 
 import { htmlToReact } from '../utils';
 import CtaButtons from './CtaButtons';
 
 export default class SectionCta extends React.Component {
     render() {
-        const section = _.get(this.props, 'section');
-        const sectionId = _.get(section, 'section_id');
-        const title = _.get(section, 'title');
-        const subtitle = _.get(section, 'subtitle');
-        const actions = _.get(section, 'actions');
+        const section = _get(this.props, 'section');
+        const sectionId = _get(section, 'section_id');
+        const title = _get(section, 'title');
+        const subtitle = _get(section, 'subtitle');
+        const actions = _get(section, 'actions');
 
         return (
             <section id={sectionId} className="block cta-block bg-accent outer">

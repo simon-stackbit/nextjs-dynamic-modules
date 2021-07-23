@@ -1,17 +1,18 @@
 import React from 'react';
-import _ from 'lodash';
+import _map from 'lodash/map';
+import _get from 'lodash/get';
 
 import { htmlToReact, classNames, markdownify } from '../utils';
 import CtaButtons from './CtaButtons';
 
 export default class SectionPricing extends React.Component {
     renderPricingPlan(plan, index) {
-        const highlight = _.get(plan, 'highlight');
-        const title = _.get(plan, 'title');
-        const subtitle = _.get(plan, 'subtitle');
-        const price = _.get(plan, 'price');
-        const details = _.get(plan, 'details');
-        const actions = _.get(plan, 'actions');
+        const highlight = _get(plan, 'highlight');
+        const title = _get(plan, 'title');
+        const subtitle = _get(plan, 'subtitle');
+        const price = _get(plan, 'price');
+        const details = _get(plan, 'details');
+        const actions = _get(plan, 'actions');
 
         return (
             <div key={index} className="cell plan">
@@ -33,12 +34,12 @@ export default class SectionPricing extends React.Component {
     }
 
     render() {
-        const section = _.get(this.props, 'section');
-        const sectionId = _.get(section, 'section_id');
-        const background = _.get(section, 'background');
-        const title = _.get(section, 'title');
-        const subtitle = _.get(section, 'subtitle');
-        const pricingPlans = _.get(section, 'pricing_plans');
+        const section = _get(this.props, 'section');
+        const sectionId = _get(section, 'section_id');
+        const background = _get(section, 'background');
+        const title = _get(section, 'title');
+        const subtitle = _get(section, 'subtitle');
+        const pricingPlans = _get(section, 'pricing_plans');
 
         return (
             <section id={sectionId} className={`block pricing-block bg-${background} outer`}>
@@ -48,7 +49,7 @@ export default class SectionPricing extends React.Component {
                 </div>
                 {pricingPlans && (
                     <div className="inner">
-                        <div className="grid">{_.map(pricingPlans, (plan, index) => this.renderPricingPlan(plan, index))}</div>
+                        <div className="grid">{_map(pricingPlans, (plan, index) => this.renderPricingPlan(plan, index))}</div>
                     </div>
                 )}
             </section>

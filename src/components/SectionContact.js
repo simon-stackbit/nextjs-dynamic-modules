@@ -1,22 +1,23 @@
 import React from 'react';
-import _ from 'lodash';
+import _map from 'lodash/map';
+import _get from 'lodash/get';
 
 import { htmlToReact, markdownify } from '../utils';
 import FormField from './FormField';
 
 export default class SectionContact extends React.Component {
     render() {
-        const section = _.get(this.props, 'section');
-        const sectionId = _.get(section, 'section_id');
-        const background = _.get(section, 'background');
-        const hideLabels = _.get(section, 'hide_labels');
-        const title = _.get(section, 'title');
-        const subtitle = _.get(section, 'subtitle');
-        const content = _.get(section, 'content');
-        const formAction = _.get(section, 'form_action');
-        const formFields = _.get(section, 'form_fields');
-        const submitLabel = _.get(section, 'submit_label');
-        const formId = _.get(section, 'form_id');
+        const section = _get(this.props, 'section');
+        const sectionId = _get(section, 'section_id');
+        const background = _get(section, 'background');
+        const hideLabels = _get(section, 'hide_labels');
+        const title = _get(section, 'title');
+        const subtitle = _get(section, 'subtitle');
+        const content = _get(section, 'content');
+        const formAction = _get(section, 'form_action');
+        const formFields = _get(section, 'form_fields');
+        const submitLabel = _get(section, 'submit_label');
+        const formId = _get(section, 'form_id');
         const formHoneypotInputId = formId + '-honeypot';
         const formHoneypotLabelId = formId + '-honeypot-label';
         const formHoneypotName = formId + '-bot-field';
@@ -44,7 +45,7 @@ export default class SectionContact extends React.Component {
                             <input aria-labelledby={formHoneypotLabelId} id={formHoneypotInputId} name={formHoneypotName} />
                         </div>
                         <input aria-labelledby={formHoneypotLabelId} type="hidden" name="form-name" value={formId} />
-                        {_.map(formFields, (field, idx) => (
+                        {_map(formFields, (field, idx) => (
                             <div key={idx} className="form-row">
                                 <FormField field={field} hideLabels={hideLabels} />
                             </div>

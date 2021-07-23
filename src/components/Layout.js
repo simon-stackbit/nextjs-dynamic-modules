@@ -1,7 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Router from 'next/router';
-import _ from 'lodash';
+import _trim from 'lodash/trim';
+import _isEmpty from 'lodash/isEmpty';
+import _get from 'lodash/get';
 
 import { withPrefix, classNames } from '../utils';
 import Header from './Header';
@@ -51,28 +53,28 @@ export default class Body extends React.Component {
     }
 
     render() {
-        const page = _.get(this.props, 'page');
-        const config = _.get(this.props, 'config');
-        const font = _.get(config, 'base_font', 'nunito-sans');
-        const favIcon = _.get(config, 'favicon');
-        const palette = _.get(config, 'palette', 'blue');
-        const domain = _.trim(_.get(config, 'domain', ''), '/');
-        const configTitle = _.get(config, 'title');
-        const pageTitle = _.get(page, 'title');
-        const seo = _.get(page, 'seo');
-        const seoTitle = _.get(seo, 'title');
+        const page = _get(this.props, 'page');
+        const config = _get(this.props, 'config');
+        const font = _get(config, 'base_font', 'nunito-sans');
+        const favIcon = _get(config, 'favicon');
+        const palette = _get(config, 'palette', 'blue');
+        const domain = _trim(_get(config, 'domain', ''), '/');
+        const configTitle = _get(config, 'title');
+        const pageTitle = _get(page, 'title');
+        const seo = _get(page, 'seo');
+        const seoTitle = _get(seo, 'title');
         const title = seoTitle ? seoTitle : [pageTitle, configTitle].join(' | ');
-        const seoDescription = _.get(seo, 'description');
-        const seoRobots = _.get(seo, 'robots', []).join(',');
-        const seoExtra = _.get(seo, 'extra', []).map((meta, metaIdx) => {
-            const keyName = _.get(meta, 'keyName', 'name');
-            const name = _.get(meta, 'name');
+        const seoDescription = _get(seo, 'description');
+        const seoRobots = _get(seo, 'robots', []).join(',');
+        const seoExtra = _get(seo, 'extra', []).map((meta, metaIdx) => {
+            const keyName = _get(meta, 'keyName', 'name');
+            const name = _get(meta, 'name');
             if (!name) {
                 return null;
             }
             const nameAttr = { [keyName]: name };
-            const relativeUrl = _.get(meta, 'relativeUrl');
-            let value = _.get(meta, 'value');
+            const relativeUrl = _get(meta, 'relativeUrl');
+            let value = _get(meta, 'value');
             if (!value) {
                 return null;
             }
@@ -90,7 +92,7 @@ export default class Body extends React.Component {
                     <meta name="viewport" content="width=device-width, initialScale=1.0" />
                     <meta name="google" content="notranslate" />
                     {seoDescription && <meta name="description" content={seoDescription} />}
-                    {!_.isEmpty(seoRobots) && <meta name="robots" content={seoRobots} />}
+                    {!_isEmpty(seoRobots) && <meta name="robots" content={seoRobots} />}
                     {seoExtra}
                     {font !== 'system-sans' && <link rel="preconnect" href="https://fonts.gstatic.com" />}
                     {font === 'nunito-sans' && (

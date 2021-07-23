@@ -1,4 +1,7 @@
-const _ = require('lodash');
+const _startsWith = require('lodash/startsWith');
+const _trim = require('lodash/trim');
+const _trimStart = require('lodash/trimStart');
+const _compact = require('lodash/compact');
 const pathPrefix = require('../../content/data/config.json').path_prefix;
 
 export default function withPrefix(url) {
@@ -6,9 +9,9 @@ export default function withPrefix(url) {
         return url;
     }
 
-    if (_.startsWith(url, '#') || _.startsWith(url, 'http://') || _.startsWith(url, 'https://')) {
+    if (_startsWith(url, '#') || _startsWith(url, 'http://') || _startsWith(url, 'https://')) {
         return url;
     }
-    const basePath = _.trim(pathPrefix, '/');
-    return '/' + _.compact([basePath, _.trimStart(url, '/')]).join('/');
+    const basePath = _trim(pathPrefix, '/');
+    return '/' + _compact([basePath, _trimStart(url, '/')]).join('/');
 }

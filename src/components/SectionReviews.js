@@ -1,14 +1,15 @@
 import React from 'react';
-import _ from 'lodash';
+import _map from 'lodash/map';
+import _get from 'lodash/get';
 
 import { htmlToReact, withPrefix } from '../utils';
 
 export default class SectionReviews extends React.Component {
     renderReview(review, index) {
-        const content = _.get(review, 'content');
-        const avatar = _.get(review, 'avatar');
-        const avatarAlt = _.get(review, 'avatar_alt');
-        const author = _.get(review, 'author');
+        const content = _get(review, 'content');
+        const avatar = _get(review, 'avatar');
+        const avatarAlt = _get(review, 'avatar_alt');
+        const author = _get(review, 'author');
 
         return (
             <blockquote key={index} className="cell review">
@@ -24,12 +25,12 @@ export default class SectionReviews extends React.Component {
     }
 
     render() {
-        const section = _.get(this.props, 'section');
-        const sectionId = _.get(section, 'section_id');
-        const background = _.get(section, 'background');
-        const title = _.get(section, 'title');
-        const subtitle = _.get(section, 'subtitle');
-        const reviews = _.get(section, 'reviews');
+        const section = _get(this.props, 'section');
+        const sectionId = _get(section, 'section_id');
+        const background = _get(section, 'background');
+        const title = _get(section, 'title');
+        const subtitle = _get(section, 'subtitle');
+        const reviews = _get(section, 'reviews');
 
         return (
             <section id={sectionId} className={`block reviews-block bg-${background} outer`}>
@@ -39,7 +40,7 @@ export default class SectionReviews extends React.Component {
                 </div>
                 {reviews && (
                     <div className="inner">
-                        <div className="grid">{_.map(reviews, (review, index) => this.renderReview(review, index))}</div>
+                        <div className="grid">{_map(reviews, (review, index) => this.renderReview(review, index))}</div>
                     </div>
                 )}
             </section>

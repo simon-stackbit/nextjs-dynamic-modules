@@ -1,19 +1,20 @@
 import React from 'react';
-import _ from 'lodash';
+import _get from 'lodash/get';
+import _map from 'lodash/map';
 
 import { markdownify } from '../utils';
 import FormField from './FormField';
 
 export default class FooterForm extends React.Component {
     render() {
-        const section = _.get(this.props, 'section');
-        const title = _.get(section, 'title');
-        const hideLabels = _.get(section, 'hide_labels');
-        const content = _.get(section, 'content');
-        const formId = _.get(section, 'form_id');
-        const formAction = _.get(section, 'form_action');
-        const formFields = _.get(section, 'form_fields');
-        const submitLabel = _.get(section, 'submit_label');
+        const section = _get(this.props, 'section');
+        const title = _get(section, 'title');
+        const hideLabels = _get(section, 'hide_labels');
+        const content = _get(section, 'content');
+        const formId = _get(section, 'form_id');
+        const formAction = _get(section, 'form_action');
+        const formFields = _get(section, 'form_fields');
+        const submitLabel = _get(section, 'submit_label');
 
         return (
             <section className="cell widget widget-form">
@@ -34,7 +35,7 @@ export default class FooterForm extends React.Component {
                         <input aria-labelledby={formId + '-honeypot-label'} id={formId + '-honeypot'} name={formId + '-bot-field'} />
                     </div>
                     <input aria-labelledby={formId + '-honeypot-label'} type="hidden" name="form-name" value={formId} />
-                    {_.map(formFields, (field, fieldIdx) => (
+                    {_map(formFields, (field, fieldIdx) => (
                         <div key={fieldIdx} className="form-row">
                             <FormField field={field} hideLabels={hideLabels} />
                         </div>

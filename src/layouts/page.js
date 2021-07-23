@@ -1,19 +1,19 @@
 import React from 'react';
-import _ from 'lodash';
+import _get from 'lodash/get';
 
 import { Layout } from '../components/index';
 import { htmlToReact, withPrefix, markdownify } from '../utils';
 
 export default class Page extends React.Component {
     render() {
-        const page = _.get(this.props, 'page');
-        const data = _.get(this.props, 'data');
-        const config = _.get(data, 'config');
-        const title = _.get(page, 'title');
-        const subtitle = _.get(page, 'subtitle');
-        const image = _.get(page, 'image');
-        const imageAlt = _.get(page, 'image_alt');
-        const markdownContent = _.get(page, 'markdown_content');
+        const page = _get(this.props, 'page');
+        const data = _get(this.props, 'data');
+        const config = _get(data, 'config');
+        const title = _get(page, 'title');
+        const subtitle = _get(page, 'subtitle');
+        const image = _get(page, 'image');
+        const imageAlt = _get(page, 'image_alt');
+        const markdownContent = _get(page, 'markdown_content');
 
         return (
             <Layout page={page} config={config}>

@@ -1,9 +1,9 @@
 import React from 'react';
-import _ from 'lodash';
+import _get from 'lodash/get';
 
 export default class Icon extends React.Component {
     render() {
-        const icon = _.get(this.props, 'icon');
+        const icon = _get(this.props, 'icon');
         return (
             <svg className="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 {icon === 'arrow-left' ? (
