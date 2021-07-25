@@ -1,19 +1,18 @@
 import React from 'react';
-import _get from 'lodash/get';
 
 import Layout from '../components/Layout';
-import { htmlToReact, withPrefix, markdownify } from '../utils';
+import { withPrefix, markdownify } from '../utils';
 
 export default class Page extends React.Component {
     render() {
-        const page = _get(this.props, 'page');
-        const data = _get(this.props, 'data');
-        const config = _get(data, 'config');
-        const title = _get(page, 'title');
-        const subtitle = _get(page, 'subtitle');
-        const image = _get(page, 'image');
-        const imageAlt = _get(page, 'image_alt');
-        const markdownContent = _get(page, 'markdown_content');
+        const page = this.props?.page;
+        const data = this.props?.data;
+        const config = data?.config;
+        const title = page?.title;
+        const subtitle = page?.subtitle;
+        const image = page?.image;
+        const imageAlt = page?.image_alt;
+        const markdownContent = page?.markdown_content;
 
         return (
             <Layout page={page} config={config}>
@@ -22,7 +21,7 @@ export default class Page extends React.Component {
                         <article className="post post-full">
                             <header className="post-header">
                                 <h1 className="post-title">{title}</h1>
-                                {subtitle && <div className="post-subtitle">{htmlToReact(subtitle)}</div>}
+                                {subtitle && <div className="post-subtitle">{subtitle}</div>}
                             </header>
                             {image && (
                                 <div className="post-image">

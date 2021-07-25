@@ -1,7 +1,5 @@
-import _compact from 'lodash/compact';
-
 export default function pathJoin(...pathParts) {
-    const result = _compact(pathParts)
+    const result = (pathParts || []).filter(Boolean)
         .join('/')
         .replace(/\/{2,}/g, '/');
     return result || '.';

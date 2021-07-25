@@ -1,17 +1,15 @@
-const _startsWith = require('lodash/startsWith');
-const _trim = require('lodash/trim');
-const _trimStart = require('lodash/trimStart');
-const _compact = require('lodash/compact');
+import safeTrim from './safeTrim';
+
 const pathPrefix = require('../../content/data/config.json').path_prefix;
 
 export default function withPrefix(url) {
-    if (!url) {
+    if (!url || typeof url !== 'string') {
         return url;
     }
 
-    if (_startsWith(url, '#') || _startsWith(url, 'http://') || _startsWith(url, 'https://')) {
+    if (url.startsWith('#') || url.startsWith('http://') || url.startsWith('https://')) {
         return url;
     }
-    const basePath = _trim(pathPrefix, '/');
-    return '/' + _compact([basePath, _trimStart(url, '/')]).join('/');
+    const basePath = safeTrim(pathPrefix, '/');
+    return '/' + [basePath, url.replace(/^\/+/, '')].filter(Boolean).join('/');
 }

@@ -1,20 +1,19 @@
 import React from 'react';
-import _get from 'lodash/get';
 
 import { Link, withPrefix, classNames } from '../utils';
 import Icon from './Icon';
 
 export default class Action extends React.Component {
     render() {
-        const action = _get(this.props, 'action');
-        const url = _get(action, 'url');
-        const label = _get(action, 'label');
-        const actionStyle = _get(action, 'style', 'link');
-        const hasIcon = _get(action, 'has_icon');
-        const actionIcon = _get(action, 'icon', 'arrow-left');
-        const actionIconPos = _get(action, 'icon_position', 'left');
-        const newWindow = _get(action, 'new_window');
-        const noFollow = _get(action, 'no_follow');
+        const action = this.props?.action;
+        const url = action?.url;
+        const label = action?.label;
+        const actionStyle = action?.style ?? 'link';
+        const hasIcon = action?.has_icon;
+        const actionIcon = action?.icon ?? 'arrow-left';
+        const actionIconPos = action?.icon_position ?? 'left';
+        const newWindow = action?.new_window;
+        const noFollow = action?.no_follow;
         const attrs = {};
         if (newWindow) {
             attrs.target = '_blank';

@@ -1,17 +1,15 @@
 import React from 'react';
-import _map from 'lodash/map';
-import _get from 'lodash/get';
 
-import { htmlToReact, withPrefix, markdownify } from '../utils';
+import { withPrefix, markdownify, safeMap } from '../utils';
 import CtaButtons from './CtaButtons';
 
 export default class SectionFeatures extends React.Component {
     renderFeature(feature, index) {
-        const image = _get(feature, 'image');
-        const imageAlt = _get(feature, 'image_alt');
-        const title = _get(feature, 'title');
-        const content = _get(feature, 'content');
-        const actions = _get(feature, 'actions');
+        const image = feature?.image;
+        const imageAlt = feature?.image_alt;
+        const title = feature?.title;
+        const content = feature?.content;
+        const actions = feature?.actions;
 
         return (
             <div key={index} className="block-item">
@@ -36,20 +34,20 @@ export default class SectionFeatures extends React.Component {
     }
 
     render() {
-        const section = _get(this.props, 'section');
-        const sectionId = _get(section, 'section_id');
-        const background = _get(section, 'background');
-        const title = _get(section, 'title');
-        const subtitle = _get(section, 'subtitle');
-        const features = _get(section, 'features');
+        const section = this.props?.section;
+        const sectionId = section?.section_id;
+        const background = section?.background;
+        const title = section?.title;
+        const subtitle = section?.subtitle;
+        const features = section?.features;
 
         return (
             <section id={sectionId} className={`block features-block bg-${background} outer`}>
                 <div className="block-header inner-small">
                     {title && <h2 className="block-title">{title}</h2>}
-                    {subtitle && <p className="block-subtitle">{htmlToReact(subtitle)}</p>}
+                    {subtitle && <p className="block-subtitle">{subtitle}</p>}
                 </div>
-                {features && <div className="inner">{_map(features, (feature, index) => this.renderFeature(feature, index))}</div>}
+                {features && <div className="inner">{safeMap(features, (feature, index) => this.renderFeature(feature, index))}</div>}
             </section>
         );
     }

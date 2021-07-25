@@ -1,18 +1,16 @@
 import React from 'react';
-import _map from 'lodash/map';
-import _get from 'lodash/get';
 
-import { htmlToReact, classNames, markdownify } from '../utils';
+import { classNames, markdownify, safeMap } from '../utils';
 import CtaButtons from './CtaButtons';
 
 export default class SectionPricing extends React.Component {
     renderPricingPlan(plan, index) {
-        const highlight = _get(plan, 'highlight');
-        const title = _get(plan, 'title');
-        const subtitle = _get(plan, 'subtitle');
-        const price = _get(plan, 'price');
-        const details = _get(plan, 'details');
-        const actions = _get(plan, 'actions');
+        const highlight = plan?.highlight;
+        const title = plan?.title;
+        const subtitle = plan?.subtitle;
+        const price = plan?.price;
+        const details = plan?.details;
+        const actions = plan?.actions;
 
         return (
             <div key={index} className="cell plan">
@@ -34,22 +32,22 @@ export default class SectionPricing extends React.Component {
     }
 
     render() {
-        const section = _get(this.props, 'section');
-        const sectionId = _get(section, 'section_id');
-        const background = _get(section, 'background');
-        const title = _get(section, 'title');
-        const subtitle = _get(section, 'subtitle');
-        const pricingPlans = _get(section, 'pricing_plans');
+        const section = this.props?.section;
+        const sectionId = section?.section_id;
+        const background = section?.background;
+        const title = section?.title;
+        const subtitle = section?.subtitle;
+        const pricingPlans = section?.pricing_plans;
 
         return (
             <section id={sectionId} className={`block pricing-block bg-${background} outer`}>
                 <div className="block-header inner-small">
                     {title && <h2 className="block-title">{title}</h2>}
-                    {subtitle && <p className="block-subtitle">{htmlToReact(subtitle)}</p>}
+                    {subtitle && <p className="block-subtitle">{subtitle}</p>}
                 </div>
                 {pricingPlans && (
                     <div className="inner">
-                        <div className="grid">{_map(pricingPlans, (plan, index) => this.renderPricingPlan(plan, index))}</div>
+                        <div className="grid">{safeMap(pricingPlans, (plan, index) => this.renderPricingPlan(plan, index))}</div>
                     </div>
                 )}
             </section>

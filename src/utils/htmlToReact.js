@@ -1,14 +1,9 @@
 import React from 'react';
 import ReactHtmlParser, { convertNodeToElement } from 'react-html-parser';
-import ScriptTag from 'react-script-tag';
 import Link from './link';
-import _noop from 'lodash/noop';
-import _map from 'lodash/map';
-import _isEmpty from 'lodash/isEmpty';
-import _omit from 'lodash/omit';
+import safeMap from './safeMap';
 
-
-const convertChildren = (children, index) => _map(children, (childNode) => convertNodeToElement(childNode, index, _noop()));
+const convertChildren = (children, index) => safeMap(children, (childNode) => convertNodeToElement(childNode, index, () => {}));
 
 export default function htmlToReact(html) {
     if (!html) {
@@ -16,21 +11,10 @@ export default function htmlToReact(html) {
     }
     return ReactHtmlParser(html, {
         transform: (node, index) => {
-            if (node.type === 'script') {
-                if (!_isEmpty(node.children)) {
-                    return (
-                        <ScriptTag key={index} {...node.attribs}>
-                            {convertChildren(node.children, index)}
-                        </ScriptTag>
-                    );
-                } else {
-                    return <ScriptTag key={index} {...node.attribs} />;
-                }
-            } else if (node.type === 'tag' && node.name === 'a') {
-                const href = node.attribs.href;
-                const props = _omit(node.attribs, 'href');
+            if (node.type === 'tag' && node.name === 'a') {
+                const { href, ...props } = node.attribs;
                 // use Link only if there are no custom attributes like style, class, and what's not that might break react
-                if (_isEmpty(props)) {
+                if (Object.keys(props).length === 0) {
                     return (
                         <Link key={index} href={href} {...props}>
                             {convertChildren(node.children, index)}

@@ -1,8 +1,6 @@
 import React from 'react';
-import _map from 'lodash/map';
-import _get from 'lodash/get';
 
-import { htmlToReact, markdownify } from '../utils';
+import { markdownify, safeMap } from '../utils';
 
 export default class SectionFaq extends React.Component {
     constructor(props) {
@@ -11,7 +9,7 @@ export default class SectionFaq extends React.Component {
     }
 
     componentDidMount() {
-        const handorgelElm = _get(this.handorgelRef, 'current');
+        const handorgelElm = this.handorgelRef?.current;
         if (handorgelElm) {
             new handorgel(handorgelElm, {
                 multiSelectable: true
@@ -20,8 +18,8 @@ export default class SectionFaq extends React.Component {
     }
 
     renderFaqItem(faqItem, index) {
-        const question = _get(faqItem, 'question');
-        const answer = _get(faqItem, 'answer');
+        const question = faqItem?.question;
+        const answer = faqItem?.answer;
 
         return (
             <React.Fragment key={index}>
@@ -39,23 +37,23 @@ export default class SectionFaq extends React.Component {
     }
 
     render() {
-        const section = _get(this.props, 'section');
-        const sectionId = _get(section, 'section_id');
-        const background = _get(section, 'background');
-        const title = _get(section, 'title');
-        const subtitle = _get(section, 'subtitle');
-        const faqItems = _get(section, 'faq_items');
+        const section = this.props?.section;
+        const sectionId = section?.section_id;
+        const background = section?.background;
+        const title = section?.title;
+        const subtitle = section?.subtitle;
+        const faqItems = section?.faq_items;
 
         return (
             <section id={sectionId} className={`block faq-block bg-${background} outer`}>
                 <div className="inner-small">
                     <div className="block-header">
                         {title && <h2 className="block-title">{title}</h2>}
-                        {subtitle && <p className="block-subtitle">{htmlToReact(subtitle)}</p>}
+                        {subtitle && <p className="block-subtitle">{subtitle}</p>}
                     </div>
                     {faqItems && (
                         <div className="faq-accordion handorgel" ref={this.handorgelRef}>
-                            {_map(faqItems, (faqItem, index) => this.renderFaqItem(faqItem, index))}
+                            {safeMap(faqItems, (faqItem, index) => this.renderFaqItem(faqItem, index))}
                         </div>
                     )}
                 </div>

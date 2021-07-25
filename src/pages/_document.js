@@ -1,6 +1,5 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import _get from 'lodash/get';
 import { classNames, withPrefix } from '../utils';
 
 export default class MyDocument extends Document {
@@ -10,9 +9,9 @@ export default class MyDocument extends Document {
     }
 
     render() {
-        const config = _get(this.props, '__NEXT_DATA__.props.pageProps.config');
-        const font = _get(config, 'base_font', 'nunito-sans');
-        const palette = _get(config, 'palette', 'blue');
+        const config = this.props?.__NEXT_DATA__?.props?.pageProps?.config;
+        const font = config?.base_font || 'nunito-sans';
+        const palette = config?.palette || 'blue';
         return (
             <Html>
                 <Head>

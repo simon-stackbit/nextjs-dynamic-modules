@@ -1,18 +1,17 @@
 import React from 'react';
-import _get from 'lodash/get';
 
 import { withPrefix, markdownify } from '../utils';
 import CtaButtons from './CtaButtons';
 
 export default class SectionHero extends React.Component {
     render() {
-        const section = _get(this.props, 'section');
-        const sectionId = _get(section, 'section_id');
-        const image = _get(section, 'image');
-        const imageAlt = _get(section, 'image_alt');
-        const title = _get(section, 'title');
-        const content = _get(section, 'content');
-        const actions = _get(section, 'actions');
+        const section = this.props?.section;
+        const sectionId = section?.section_id;
+        const image = section?.image;
+        const imageAlt = section?.image_alt;
+        const title = section?.title;
+        const content = section?.content;
+        const actions = section?.actions;
 
         return (
             <section id={sectionId} className="block hero-block bg-accent outer">
