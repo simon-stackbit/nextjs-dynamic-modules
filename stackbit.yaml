@@ -4,6 +4,7 @@
 stackbitVersion: ~0.3.0
 ssgName: nextjs
 cmsName: git
+nodeVersion: '14'
 
 # The "buildCommand" and the "publishDir" properties are used to configure the
 # serverless deployment platform when Stackbit creates a new site from this theme.
