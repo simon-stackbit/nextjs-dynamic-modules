@@ -2,12 +2,7 @@ import React from 'react';
 
 import components from './index';
 import ActionLink from './ActionLink';
-import {
-    htmlToReact,
-    safeMap,
-    nonEmptyArray,
-    modelTypeToComponentName
-} from '../utils';
+import { safeMap, nonEmptyArray, modelTypeToComponentName, markdownify } from '../utils';
 
 export default class Footer extends React.Component {
     render() {
@@ -15,7 +10,7 @@ export default class Footer extends React.Component {
         const footerSections = footer?.sections;
         const hasNav = footer?.has_nav;
         const navLinks = footer?.nav_links;
-        const footerContent = footer?.content;
+        const copyright = footer?.copyright;
         const links = footer?.links;
 
         return (
@@ -54,7 +49,7 @@ export default class Footer extends React.Component {
                             </div>
                         )}
                         <div className="site-info">
-                            {htmlToReact(footerContent)}
+                            {markdownify(copyright)}
                             &nbsp;
                             {safeMap(links, (action, idx) => (
                                 <ActionLink key={idx} action={action} />

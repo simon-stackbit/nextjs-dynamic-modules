@@ -159,14 +159,14 @@ models:
           type: model
           models:
             - action
-      - type: string
-        name: content
-        label: Footer Content
+      - type: markdown
+        name: copyright
+        label: Copyright
         description: The copyright text displayed in the footer
       - type: list
         name: links
         label: Links
-        description: A list of links displayed in the footer
+        description: A list of links displayed under the copyright line
         items:
           type: model
           models:

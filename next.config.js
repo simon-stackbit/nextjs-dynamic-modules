@@ -1,5 +1,4 @@
 const sourcebit = require('sourcebit');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const sourcebitConfig = require('./sourcebit.js');
 
@@ -19,15 +18,16 @@ module.exports = {
         config.plugins.push(new webpack.WatchIgnorePlugin([[/\/content\//]]));
 
         if (process.env.ANALYZE === 'true') {
+            const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
             config.plugins.push(
                 new BundleAnalyzerPlugin({
                     openAnalyzer: true,
-                    // analyzerMode: 'server',
-                    // analyzerPort: isServer ? 8888 : 8889,
-                    analyzerMode: 'static',
-                    reportFilename: isServer
-                        ? '../analyze/server.html'
-                        : './analyze/client.html'
+                    analyzerMode: 'server',
+                    analyzerPort: isServer ? 8888 : 8889,
+                    // analyzerMode: 'static',
+                    // reportFilename: isServer
+                    //     ? '../analyze/server.html'
+                    //     : './analyze/client.html'
                 })
             );
         }
