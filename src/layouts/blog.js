@@ -39,9 +39,7 @@ export default class Blog extends React.Component {
     }
 
     render() {
-        const page = this.props?.page;
         const data = this.props?.data;
-        const config = this.props?.data?.config;
         const posts = this.props?.posts ?? [];
         const sortedPosts = posts.sort((postA, postB) => {
             if (postA?.date > postB?.date) {
@@ -53,13 +51,11 @@ export default class Blog extends React.Component {
             }
         });
         return (
-            <Layout page={page} config={config}>
-                <div className="outer">
-                    <div className="inner">
-                        <div className="grid post-feed">{safeMap(sortedPosts, (post, index) => this.renderPost(post, index, data))}</div>
-                    </div>
+            <div className="outer">
+                <div className="inner">
+                    <div className="grid post-feed">{safeMap(sortedPosts, (post, index) => this.renderPost(post, index, data))}</div>
                 </div>
-            </Layout>
+            </div>
         );
     }
 }
