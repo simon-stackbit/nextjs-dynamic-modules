@@ -1,16 +1,15 @@
 import React from 'react';
-import _ from 'lodash';
 
 import { Link, withPrefix, markdownify } from '../utils';
 
 export default class FooterText extends React.Component {
     render() {
-        const section = _.get(this.props, 'section');
-        const image = _.get(section, 'image');
-        const imageUrl = _.get(section, 'image_url');
-        const imageAlt = _.get(section, 'image_alt');
-        const title = _.get(section, 'title');
-        const content = _.get(section, 'content');
+        const section = this.props?.section;
+        const image = section?.image;
+        const imageUrl = section?.image_url;
+        const imageAlt = section?.image_alt;
+        const title = section?.title;
+        const content = section?.content;
 
         return (
             <section className="cell widget widget-text">

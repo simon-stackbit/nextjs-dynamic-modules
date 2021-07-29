@@ -1,14 +1,15 @@
-const _ = require('lodash');
+import safeTrim from './safeTrim';
+
 const pathPrefix = require('../../content/data/config.json').path_prefix;
 
 export default function withPrefix(url) {
-    if (!url) {
+    if (!url || typeof url !== 'string') {
         return url;
     }
 
-    if (_.startsWith(url, '#') || _.startsWith(url, 'http://') || _.startsWith(url, 'https://')) {
+    if (url.startsWith('#') || url.startsWith('http://') || url.startsWith('https://')) {
         return url;
     }
-    const basePath = _.trim(pathPrefix, '/');
-    return '/' + _.compact([basePath, _.trimStart(url, '/')]).join('/');
+    const basePath = safeTrim(pathPrefix, '/');
+    return '/' + [basePath, url.replace(/^\/+/, '')].filter(Boolean).join('/');
 }

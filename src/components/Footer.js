@@ -1,29 +1,27 @@
 import React from 'react';
-import _ from 'lodash';
 
 import components from './index';
 import ActionLink from './ActionLink';
-import { htmlToReact } from '../utils';
+import { safeMap, nonEmptyArray, modelTypeToComponentName, markdownify } from '../utils';
 
 export default class Footer extends React.Component {
     render() {
-        const config = _.get(this.props, 'config');
-        const footer = _.get(config, 'footer');
-        const footerSections = _.get(footer, 'sections');
-        const hasNav = _.get(footer, 'has_nav');
-        const navLinks = _.get(footer, 'nav_links');
-        const footerContent = _.get(footer, 'content');
-        const links = _.get(footer, 'links');
+        const footer = this.props?.config?.footer;
+        const footerSections = footer?.sections;
+        const hasNav = footer?.has_nav;
+        const navLinks = footer?.nav_links;
+        const copyright = footer?.copyright;
+        const links = footer?.links;
 
         return (
             <footer id="colophon" className="site-footer">
-                {footerSections && !_.isEmpty(footerSections) && (
+                {nonEmptyArray(footerSections) && (
                     <div className="footer-top outer">
                         <div className="inner">
                             <div className="grid footer-widgets">
-                                {_.map(footerSections, (section, sectionIdx) => {
-                                    const sectionType = _.get(section, 'type');
-                                    const component = _.upperFirst(_.camelCase(sectionType));
+                                {safeMap(footerSections, (section, idx) => {
+                                    const sectionType = section?.type;
+                                    const component = modelTypeToComponentName(sectionType);
                                     if (!component) {
                                         throw new Error(`footer section does not have the 'type' property`);
                                     }
@@ -31,7 +29,7 @@ export default class Footer extends React.Component {
                                     if (!Component) {
                                         throw new Error(`no component matching the footer section's type: ${sectionType}`);
                                     }
-                                    return <Component key={sectionIdx} section={section} />;
+                                    return <Component key={idx} section={section} />;
                                 })}
                             </div>
                         </div>
@@ -39,11 +37,11 @@ export default class Footer extends React.Component {
                 )}
                 <div className="footer-bottom outer">
                     <div className="inner">
-                        {hasNav && navLinks && (
+                        {hasNav && nonEmptyArray(navLinks) && (
                             <div className="footer-nav">
                                 <ul className="menu">
-                                    {_.map(navLinks, (action, actionIdx) => (
-                                        <li key={actionIdx} className="menu-item">
+                                    {safeMap(navLinks, (action, idx) => (
+                                        <li key={idx} className="menu-item">
                                             <ActionLink action={action} />
                                         </li>
                                     ))}
@@ -51,10 +49,10 @@ export default class Footer extends React.Component {
                             </div>
                         )}
                         <div className="site-info">
-                            {htmlToReact(footerContent)}
+                            {markdownify(copyright)}
                             &nbsp;
-                            {_.map(links, (action, actionIdx) => (
-                                <ActionLink key={actionIdx} action={action} />
+                            {safeMap(links, (action, idx) => (
+                                <ActionLink key={idx} action={action} />
                             ))}
                         </div>
                     </div>

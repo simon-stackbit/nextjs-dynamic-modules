@@ -1,18 +1,24 @@
 import React from 'react';
-import _ from 'lodash';
 import { sourcebitDataClient } from 'sourcebit-target-next';
 import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-updates';
 
+import Layout from '../components/Layout';
 import pageLayouts from '../layouts';
 
 class Page extends React.Component {
     render() {
-        const modelName = _.get(this.props, 'page.__metadata.modelName');
+        const config = this.props?.data?.config;
+        const page = this.props?.page;
+        const modelName = this.props?.page?.__metadata?.modelName;
         const PageLayout = pageLayouts[modelName];
         if (!PageLayout) {
             throw new Error(`no page layout matching the page model: ${modelName}`);
         }
-        return <PageLayout {...this.props} />;
+        return (
+            <Layout page={page} config={config}>
+                <PageLayout {...this.props} />
+            </Layout>
+        );
     }
 }
 

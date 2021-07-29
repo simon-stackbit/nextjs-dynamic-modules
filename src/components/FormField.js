@@ -1,18 +1,17 @@
 import React from 'react';
-import _ from 'lodash';
 
-import { classNames } from '../utils';
+import { classNames, safeMap } from '../utils';
 
 export default class FormField extends React.Component {
     render() {
-        const field = _.get(this.props, 'field');
-        const hideLabels = _.get(this.props, 'hideLabels');
-        const inputType = _.get(field, 'input_type');
-        const label = _.get(field, 'label');
-        const name = _.get(field, 'name');
-        const defaultValue = _.get(field, 'default_value');
-        const options = _.get(field, 'options');
-        const required = _.get(field, 'is_required');
+        const field = this.props?.field;
+        const hideLabels = this.props?.hideLabels;
+        const inputType = field?.input_type;
+        const label = field?.label;
+        const name = field?.name;
+        const defaultValue = field?.default_value;
+        const options = field?.options;
+        const required = field?.is_required;
         const attr = {};
         const nameLabel = `${name}-label`;
         if (label) {
@@ -42,8 +41,8 @@ export default class FormField extends React.Component {
                     <div className="form-select">
                         <select id={name} name={name} {...attr}>
                             {defaultValue && <option value="">{defaultValue}</option>}
-                            {_.map(options, (option, optionIdx) => (
-                                <option key={optionIdx} value={option}>
+                            {safeMap(options, (option, idx) => (
+                                <option key={idx} value={option}>
                                     {option}
                                 </option>
                             ))}

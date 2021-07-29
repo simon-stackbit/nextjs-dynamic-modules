@@ -4,6 +4,7 @@
 stackbitVersion: ~0.3.0
 ssgName: nextjs
 cmsName: git
+nodeVersion: '14'
 
 # The "buildCommand" and the "publishDir" properties are used to configure the
 # serverless deployment platform when Stackbit creates a new site from this theme.
@@ -34,6 +35,12 @@ pagesDir: content/pages
 # should be used to match a page to a model, by model name, in case when pages
 # belonging to different models are located in the same folder
 pageLayoutKey: layout
+
+logicFields:
+  - config.base_font
+  - config.palette
+  - config.path_prefix
+  - stackbit_page_meta
 
 # These are the models of the website
 # for more info about models visit: https://www.stackbit.com/docs/stackbit-yaml/models/
@@ -152,14 +159,14 @@ models:
           type: model
           models:
             - action
-      - type: string
-        name: content
-        label: Footer Content
+      - type: markdown
+        name: copyright
+        label: Copyright
         description: The copyright text displayed in the footer
       - type: list
         name: links
         label: Links
-        description: A list of links displayed in the footer
+        description: A list of links displayed under the copyright line
         items:
           type: model
           models:

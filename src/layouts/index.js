@@ -1,9 +1,16 @@
-import landing from './landing';
-import page from './page';
-import blog from './blog';
-import post from './post';
+import dynamic from 'next/dynamic';
 
-export { landing, page, blog, post };
+const landing = dynamic(() => import('./landing'));
+const page = dynamic(() => import('./page'));
+const blog = dynamic(() => import('./blog'));
+const post = dynamic(() => import('./post'));
+
+export {
+    landing,
+    page,
+    blog,
+    post
+};
 
 export default {
     landing,

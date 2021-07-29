@@ -1,15 +1,14 @@
 import React from 'react';
-import _ from 'lodash';
 
 import { Link, withPrefix } from '../utils';
 
 export default class ActionLink extends React.Component {
     render() {
-        const action = _.get(this.props, 'action');
-        const url = _.get(action, 'url');
-        const label = _.get(action, 'label', null);
-        const newWindow = _.get(action, 'new_window');
-        const noFollow = _.get(action, 'no_follow');
+        const action = this.props?.action;
+        const url = action?.url;
+        const label = action?.label;
+        const newWindow = action?.new_window;
+        const noFollow = action?.no_follow;
         const attrs = {};
         if (newWindow) {
             attrs.target = '_blank';

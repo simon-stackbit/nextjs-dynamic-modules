@@ -1,9 +1,14 @@
-import marked from 'marked';
-import htmlToReact from './htmlToReact';
+import Markdown from 'markdown-to-jsx';
+import Link from './link';
 
 export default function markdownify(markdown) {
     if (!markdown) {
         return null;
     }
-    return htmlToReact(marked(markdown));
+    const options = { overrides: { a: Link } };
+    return (
+        <Markdown options={options}>
+            {markdown}
+        </Markdown>
+    );
 }

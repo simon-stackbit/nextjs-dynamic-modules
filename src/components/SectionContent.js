@@ -1,19 +1,18 @@
 import React from 'react';
-import _ from 'lodash';
 
 import { withPrefix, markdownify } from '../utils';
 import CtaButtons from './CtaButtons';
 
 export default class SectionContent extends React.Component {
     render() {
-        let section = _.get(this.props, 'section');
-        const sectionId = _.get(section, 'section_id');
-        const background = _.get(section, 'background');
-        const image = _.get(section, 'image');
-        const imageAlt = _.get(section, 'image_alt');
-        const title = _.get(section, 'title');
-        const content = _.get(section, 'content');
-        const actions = _.get(section, 'actions');
+        let section = this.props?.section;
+        const sectionId = section?.section_id;
+        const background = section?.background;
+        const image = section?.image;
+        const imageAlt = section?.image_alt;
+        const title = section?.title;
+        const content = section?.content;
+        const actions = section?.actions;
 
         return (
             <section id={sectionId} className={`block text-block bg-${background} outer`}>

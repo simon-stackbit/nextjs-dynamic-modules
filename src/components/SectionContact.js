@@ -1,22 +1,21 @@
 import React from 'react';
-import _ from 'lodash';
 
-import { htmlToReact, markdownify } from '../utils';
+import { markdownify, safeMap } from '../utils';
 import FormField from './FormField';
 
 export default class SectionContact extends React.Component {
     render() {
-        const section = _.get(this.props, 'section');
-        const sectionId = _.get(section, 'section_id');
-        const background = _.get(section, 'background');
-        const hideLabels = _.get(section, 'hide_labels');
-        const title = _.get(section, 'title');
-        const subtitle = _.get(section, 'subtitle');
-        const content = _.get(section, 'content');
-        const formAction = _.get(section, 'form_action');
-        const formFields = _.get(section, 'form_fields');
-        const submitLabel = _.get(section, 'submit_label');
-        const formId = _.get(section, 'form_id');
+        const section = this.props?.section;
+        const sectionId = section?.section_id;
+        const background = section?.background;
+        const hideLabels = section?.hide_labels;
+        const title = section?.title;
+        const subtitle = section?.subtitle;
+        const content = section?.content;
+        const formAction = section?.form_action;
+        const formFields = section?.form_fields;
+        const submitLabel = section?.submit_label;
+        const formId = section?.form_id;
         const formHoneypotInputId = formId + '-honeypot';
         const formHoneypotLabelId = formId + '-honeypot-label';
         const formHoneypotName = formId + '-bot-field';
@@ -25,7 +24,7 @@ export default class SectionContact extends React.Component {
             <section id={sectionId} className={`block contact-block bg-${background} outer`}>
                 <div className="block-header inner-small">
                     {title && <h2 className="block-title">{title}</h2>}
-                    {subtitle && <p className="block-subtitle">{htmlToReact(subtitle)}</p>}
+                    {subtitle && <p className="block-subtitle">{subtitle}</p>}
                 </div>
                 <div className="block-content inner-medium">
                     {markdownify(content)}
@@ -44,7 +43,7 @@ export default class SectionContact extends React.Component {
                             <input aria-labelledby={formHoneypotLabelId} id={formHoneypotInputId} name={formHoneypotName} />
                         </div>
                         <input aria-labelledby={formHoneypotLabelId} type="hidden" name="form-name" value={formId} />
-                        {_.map(formFields, (field, idx) => (
+                        {safeMap(formFields, (field, idx) => (
                             <div key={idx} className="form-row">
                                 <FormField field={field} hideLabels={hideLabels} />
                             </div>

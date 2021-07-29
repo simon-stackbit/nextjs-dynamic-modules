@@ -1,39 +1,29 @@
+import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { Helmet } from 'react-helmet';
-import { withPrefix } from '../utils';
+import { classNames, withPrefix } from '../utils';
 
 export default class MyDocument extends Document {
     static async getInitialProps(ctx) {
         const initialProps = await Document.getInitialProps(ctx);
-        // see https://github.com/nfl/react-helmet#server-usage for more information
-        // 'head' was occupied by 'renderPage().head', we cannot use it
-        return { ...initialProps, helmet: Helmet.renderStatic() };
-    }
-
-    // should render on <html>
-    get helmetHtmlAttrComponents() {
-        return this.props.helmet.htmlAttributes.toComponent();
-    }
-
-    // should render on <body>
-    get helmetBodyAttrComponents() {
-        return this.props.helmet.bodyAttributes.toComponent();
-    }
-
-    // should render on <head>
-    get helmetHeadComponents() {
-        return Object.keys(this.props.helmet)
-            .filter((el) => el !== 'htmlAttributes' && el !== 'bodyAttributes')
-            .map((el) => this.props.helmet[el].toComponent());
+        return { ...initialProps };
     }
 
     render() {
-        // if you don't like Helmet but you still want to set properties on body use this
-        // const pageProps = _.get(this.props, '__NEXT_DATA__.props.pageProps');
+        const config = this.props?.__NEXT_DATA__?.props?.pageProps?.config;
+        const font = config?.base_font || 'nunito-sans';
+        const palette = config?.palette || 'blue';
         return (
-            <Html {...this.helmetHtmlAttrComponents}>
-                <Head>{this.helmetHeadComponents}</Head>
-                <body {...this.helmetBodyAttrComponents}>
+            <Html>
+                <Head>
+                    {font !== 'system-sans' && <link rel="preconnect" href="https://fonts.gstatic.com" />}
+                    {font === 'nunito-sans' && (
+                        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+                    )}
+                    {font === 'fira-sans' && (
+                        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+                    )}
+                </Head>
+                <body className={classNames(`palette-${palette}`, `font-${font}`)}>
                     <Main />
                     <script src={withPrefix('js/plugins.js')} />
                     <NextScript />

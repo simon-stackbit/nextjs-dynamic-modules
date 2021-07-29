@@ -1,8 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
-import _ from 'lodash';
 
-import { Link, withPrefix, classNames, getPageUrl } from '../utils';
+import { Link, withPrefix, classNames, getPageUrl, safeMap, nonEmptyArray, safeTrim } from '../utils';
 import Action from './Action';
 
 export default class Header extends React.Component {
@@ -24,7 +23,7 @@ export default class Header extends React.Component {
     }
 
     handleWindowResize() {
-        const menuOpenElm = _.get(this.menuOpenRef, 'current.offsetParent');
+        const menuOpenElm = this.menuOpenRef?.current?.offsetParent;
         if (menuOpenElm === null) {
             document.body.classList.remove('menu--opened');
         }
@@ -54,12 +53,12 @@ export default class Header extends React.Component {
                             <span className="icon-close" aria-hidden="true" />
                         </button>
                         <ul className="menu">
-                            {_.map(navLinks, (action, actionIdx) => {
-                                const actionUrl = _.trim(_.get(action, 'url'), '/');
-                                const actionStyle = _.get(action, 'style', 'link');
+                            {safeMap(navLinks, (action, idx) => {
+                                const actionUrl = safeTrim(action?.url, '/');
+                                const actionStyle = action?.style || 'link';
                                 return (
                                     <li
-                                        key={actionIdx}
+                                        key={idx}
                                         className={classNames('menu-item', {
                                             'current-menu-item': pageUrl === actionUrl,
                                             'menu-button': actionStyle !== 'link'
@@ -81,16 +80,16 @@ export default class Header extends React.Component {
     }
 
     render() {
-        const config = _.get(this.props, 'config');
-        const page = _.get(this.props, 'page');
-        const configTitle = _.get(config, 'title');
-        const header = _.get(config, 'header');
-        const hasNav = _.get(header, 'has_nav');
-        const navLinks = _.get(header, 'nav_links');
-        const logoImage = _.get(header, 'logo_img');
-        const logoImageAlt = _.get(header, 'logo_img_alt');
-        const pageTemplate = _.get(page, 'template');
-        const pageUrl = _.trim(getPageUrl(page), '/');
+        const config = this.props?.config;
+        const page = this.props?.page;
+        const configTitle = config?.title;
+        const header = config?.header;
+        const hasNav = header?.has_nav;
+        const navLinks = header?.nav_links;
+        const logoImage = header?.logo_img;
+        const logoImageAlt = header?.logo_img_alt;
+        const pageTemplate = page?.template;
+        const pageUrl = safeTrim(getPageUrl(page), '/');
 
         return (
             <header id="masthead" className="site-header outer">
@@ -114,7 +113,7 @@ export default class Header extends React.Component {
                                 </p>
                             )}
                         </div>
-                        {hasNav && !_.isEmpty(navLinks) && this.renderNavLinks(navLinks, pageUrl)}
+                        {hasNav && nonEmptyArray(navLinks) && this.renderNavLinks(navLinks, pageUrl)}
                     </div>
                 </div>
             </header>

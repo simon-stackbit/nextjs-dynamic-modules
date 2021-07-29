@@ -1,11 +1,11 @@
 import React from 'react';
-import _ from 'lodash';
 
 import Action from './Action';
+import { safeMap } from '../utils';
 
 export default class CtaButtons extends React.Component {
     render() {
-        const actions = _.get(this.props, 'actions');
-        return _.map(actions, (action, actionIdx) => <Action key={actionIdx} action={action} />);
+        const actions = this.props?.actions;
+        return safeMap(actions, (action, idx) => <Action key={idx} action={action} />);
     }
 }

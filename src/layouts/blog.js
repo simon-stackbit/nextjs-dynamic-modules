@@ -1,16 +1,15 @@
 import React from 'react';
-import _ from 'lodash';
 
-import { Layout } from '../components';
-import { Link, getPageUrl, withPrefix } from '../utils';
+import Layout from '../components/Layout';
+import { Link, getPageUrl, withPrefix, safeMap } from '../utils';
 import BlogPostFooter from '../components/BlogPostFooter';
 
 export default class Blog extends React.Component {
     renderPost(post, index, data) {
-        const title = _.get(post, 'title');
-        const thumbImage = _.get(post, 'thumb_image');
-        const thumbImageAlt = _.get(post, 'thumb_image_alt');
-        const excerpt = _.get(post, 'excerpt');
+        const title = post?.title;
+        const thumbImage = post?.thumb_image;
+        const thumbImageAlt = post?.thumb_image_alt;
+        const excerpt = post?.excerpt;
         const postUrl = getPageUrl(post, { withPrefix: true });
 
         return (
@@ -40,18 +39,23 @@ export default class Blog extends React.Component {
     }
 
     render() {
-        const page = _.get(this.props, 'page');
-        const data = _.get(this.props, 'data');
-        const config = _.get(this.props, 'data.config');
-        const posts = _.orderBy(_.get(this.props, 'posts', []), 'date', 'desc');
+        const data = this.props?.data;
+        const posts = this.props?.posts ?? [];
+        const sortedPosts = posts.sort((postA, postB) => {
+            if (postA?.date > postB?.date) {
+                return -1;
+            } else if (postA?.date < postB?.date) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
         return (
-            <Layout page={page} config={config}>
-                <div className="outer">
-                    <div className="inner">
-                        <div className="grid post-feed">{_.map(posts, (post, index) => this.renderPost(post, index, data))}</div>
-                    </div>
+            <div className="outer">
+                <div className="inner">
+                    <div className="grid post-feed">{safeMap(sortedPosts, (post, index) => this.renderPost(post, index, data))}</div>
                 </div>
-            </Layout>
+            </div>
         );
     }
 }
